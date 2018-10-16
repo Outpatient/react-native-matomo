@@ -18,5 +18,8 @@ module.exports = {
   },
   trackScreen: function(screen, title) {
     Piwik.trackScreen(screen, title);
+  },
+  trackCampaign: function (campaignName, campaignKeyword) {
+    Piwik.trackCampaign(campaignName, campaignKeyword);
   }
 };
