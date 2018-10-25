@@ -46,6 +46,11 @@ static NSString * const PiwikAppTrackingKey = @"@@Piwik-tracking-version@@";
 
 RCT_EXPORT_MODULE();
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 RCT_EXPORT_METHOD(initTracker: (NSString*)url id:(NSNumber* _Nonnull) id)
 {
 #if DEBUG
