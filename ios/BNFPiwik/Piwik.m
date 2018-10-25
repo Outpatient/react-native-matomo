@@ -35,7 +35,7 @@ static NSString * const PiwikAppTrackingKey = @"@@Piwik-tracking-version@@";
     if ((self = [super init])) {
     }
     return self;
-    
+
 }
 
 - (void)dealloc
@@ -100,6 +100,16 @@ RCT_EXPORT_METHOD(trackEvent: (NSString* _Nonnull)category action:(NSString* _No
     NSString * name= [values objectForKey:@"name"];
     NSNumber* value = [values objectForKey:@"value"];
     [[PiwikTracker sharedInstance] sendEventWithCategory:category action:action name:name value:value];
+}
+
+RCT_EXPORT_METHOD(trackCampaign: (NSString* _Nonnull)campaignName campaignKeyword:(NSString* _Nonnull)campaignKeyword)
+{
+#if DEBUG
+    RCTLogInfo(@"Tracking campaign info");
+#endif
+    // fake url, only the query parameters are relevant
+    NSString * campaignUrl = [NSString stringWithFormat:@"http://outpatient.ai/?pk_campaign=%@&pk_kwd=%@", campaignName, campaignKeyword];
+    [[PiwikTracker sharedInstance] sendCampaign:campaignUrl];
 }
 
 RCT_EXPORT_METHOD(trackAppDownload)
