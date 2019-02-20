@@ -24,6 +24,9 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
     private Matomo matomo;
     private Tracker mMatomoTracker;
 
+    private String campaignName;
+    private String campaignKeyword;
+
     @ReactMethod
     public void initTracker(String url, int id) {
         TrackerBuilder builder = TrackerBuilder.createDefault(url, id);
@@ -45,7 +48,15 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
         if (mMatomoTracker == null) {
             throw new RuntimeException("Tracker must be initialized before usage");
         }
-        TrackHelper.track().screen(screen).title(title).with(mMatomoTracker);
+        if (campaignName != null) {
+          TrackHelper.track().screen(screen).campaign(campaignName, campaignKeyword).title(title).with(mMatomoTracker);
+
+          // only send this with one screen view after campaign info is set
+          campaignName = null;
+          campaignKeyword = null;
+        } else {
+          TrackHelper.track().screen(screen).title(title).with(mMatomoTracker);
+        }
     }
 
     @ReactMethod
@@ -77,7 +88,10 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
     }
 
     @ReactMethod
-    public void trackCampaign(String name, String keyboard) {}
+    public void trackCampaign(String name, String keyword) {
+      campaignName = name;
+      campaignKeyword = keyword;
+    }
 
     @ReactMethod
     public void trackContentImpression(@NonNull String name, @NonNull ReadableMap values) {}
