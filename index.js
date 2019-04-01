@@ -1,4 +1,5 @@
 var Matomo = require('react-native').NativeModules.Matomo;
+import {Platform} from 'react-native'
 module.exports = {
   initTracker: Matomo.initTracker,
   setUserId: function(userId) {
@@ -27,5 +28,19 @@ module.exports = {
   },
   trackSearch: function(query, category, resultCount, url) {
     Matomo.trackSearch(query, {category, resultCount, url});
+  },
+  trackVersion: function(version) {
+    if (Platform.OS === 'ios') {
+      Matomo.set(value: version, forIndex: 1)
+    } else {
+      Matomo.setVersion(version);
+    }
+  },
+  trackUserType: function(userType) {
+    if (Platform.OS === 'ios') {
+      Matomo.set(value: userType, forIndex: 2)
+    } else {
+      Matomo.setUserType(userType);
+    }
   }
 };

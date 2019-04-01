@@ -26,6 +26,8 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
 
     private String campaignName;
     private String campaignKeyword;
+    private String version;
+    private String userType;
 
     @ReactMethod
     public void initTracker(String url, int id) {
@@ -55,7 +57,7 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
           campaignName = null;
           campaignKeyword = null;
         } else {
-          TrackHelper.track().screen(screen).title(title).with(mMatomoTracker);
+          TrackHelper.track().screen(screen).title(title).dimension(1, version).dimension(2, userType).with(mMatomoTracker);
         }
     }
 
@@ -72,7 +74,7 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
         if (values.hasKey("value") && !values.isNull("value")) {
             value = (float)values.getDouble("value");
         }
-        TrackHelper.track().event(category, action).name(name).value(value).with(mMatomoTracker);
+        TrackHelper.track().event(category, action).name(name).value(value).dimension(1, version).dimension(2, userType).with(mMatomoTracker);
     }
 
     @ReactMethod
@@ -84,13 +86,27 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
         if (values.hasKey("revenue") && !values.isNull("revenue")) {
             revenue = (float)values.getDouble("revenue");
         }
-        TrackHelper.track().goal(goalId).revenue(revenue).with(mMatomoTracker);
+        TrackHelper.track().goal(goalId).revenue(revenue).dimension(1, version).dimension(2, userType).with(mMatomoTracker);
     }
 
     @ReactMethod
     public void trackCampaign(String name, String keyword) {
       campaignName = name;
       campaignKeyword = keyword;
+    }
+
+    @ReactMethod
+    public void trackCampaign(String name, String keyword) {
+      campaignName = name;
+      campaignKeyword = keyword;
+    }
+
+    public void setVersion (String appVersion) {
+      version = appVersion;
+    }
+
+    public void setUserType (String newUserType) {
+      userType = newUserType;
     }
 
     @ReactMethod
