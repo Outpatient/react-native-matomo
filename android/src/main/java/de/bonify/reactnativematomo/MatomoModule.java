@@ -96,15 +96,11 @@ public class MatomoModule extends ReactContextBaseJavaModule implements Lifecycl
     }
 
     @ReactMethod
-    public void trackCampaign(String name, String keyword) {
-      campaignName = name;
-      campaignKeyword = keyword;
-    }
-
     public void setVersion (String appVersion) {
       version = appVersion;
     }
 
+    @ReactMethod
     public void setUserType (String newUserType) {
       userType = newUserType;
     }
