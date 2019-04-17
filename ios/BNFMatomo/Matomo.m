@@ -134,10 +134,10 @@ RCT_EXPORT_METHOD(trackSearch:(NSString* _Nonnull)query values:(NSDictionary* _N
         NSString * category = [values objectForKey:@"category"];
         NSString * resultCount = [values objectForKey:@"resultCount"];
         NSString * url = [values objectForKey:@"url"];
-        
+
         NSInteger intResultCount = resultCount != nil ? [resultCount integerValue] : 0;
         NSURL* nsUrl = url != nil ? [NSURL URLWithString: url] : nil;
-        
+
         [tracker trackSearchWithQuery:query category:category resultCount:intResultCount url:nsUrl];
     }
 }
@@ -147,6 +147,16 @@ RCT_EXPORT_METHOD(trackAppDownload)
 #if DEBUG
     RCTLogInfo(@"Unsupported on iOS");
 #endif
+}
+
+RCT_EXPORT_METHOD(set: (NSString*)value forIndex:(NSNumber* _Nonnull) index)
+{
+#if DEBUG
+    RCTLogInfo(@"Setting dimension");
+#endif
+  if (tracker != nil) {
+      [tracker setDimension:value forIndex:index];
+  }
 }
 
 @end

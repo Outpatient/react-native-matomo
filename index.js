@@ -31,14 +31,14 @@ module.exports = {
   },
   trackVersion: function(version) {
     if (Platform.OS === 'ios') {
-      Matomo.set(value: version, forIndex: 1)
+      Matomo.set(version, 1);
     } else {
       Matomo.setVersion(version);
     }
   },
   trackUserType: function(userType) {
     if (Platform.OS === 'ios') {
-      Matomo.set(value: userType, forIndex: 2)
+      Matomo.set(userType, 2);
     } else {
       Matomo.setUserType(userType);
     }
