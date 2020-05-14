@@ -14,4 +14,5 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/{BNFMatomo,MatomoTracker}/**/*.{m,h,swift}"
   s.static_framework = true
   s.swift_version = '4.2'
+  s.dependency 'React'
 end
